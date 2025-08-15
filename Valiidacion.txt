@@ -1,0 +1,40 @@
+// Simula una "base de datos" en memoria
+const fakeDB = {
+    herramientas: [
+        { id: 1, codigo: "TAL-001", ubicacion: "Estante A1" },
+        { id: 2, codigo: "LLV-002", ubicacion: "Cajón B3" }
+    ],
+    lastId: 2
+};
+
+function validarYAgregar(codigo, ubicacion) {
+    // Validación ficticia
+    if (!codigo.match(/^[A-Z]{3}-\d{3}$/)) {
+        throw new Error("Formato de código inválido (ej: ABC-123)");
+    }
+    
+    if (ubicacion.length < 2) {
+        throw new Error("Ubicación debe tener al menos 2 caracteres");
+    }
+
+    // "Guardar" en la "DB"
+    fakeDB.lastId++;
+    fakeDB.herramientas.push({
+        id: fakeDB.lastId,
+        codigo: codigo,
+        ubicacion: ubicacion
+    });
+    
+    console.log(`📦 Se registró ${codigo} en ${ubicacion}`);
+}
+
+// Ejemplo de uso
+try {
+    validarYAgregar("DEST-005", "Estante C2");
+    validarYAgregar("INV-999", "X"); // Esto fallará
+} catch (error) {
+    console.error(`🚨 Error: ${error.message}`);
+}
+
+// Mostrar "DB"
+console.log("\nEstado actual de fakeDB:", JSON.stringify(fakeDB, null, 2));
