@@ -1,0 +1,35 @@
+class Inventario:
+    def __init__(self):
+        self.categorias = {
+            "electricas": [],
+            "manuales": [],
+            "medicion": []
+        }
+    
+    def agregar_con_detalles(self):
+        nombre = input("Nombre del ítem: ")
+        categoria = input("Categoría (electricas/manuales/medicion): ")
+        
+        if categoria not in self.categorias:
+            print("❌ Categoría inválida")
+            return
+            
+        self.categorias[categoria].append({
+            "id": len(self.categorias[categoria]) + 1,
+            "nombre": nombre,
+            "estado": "disponible"
+        })
+        print(f"✅ Ítem '{nombre}' agregado a '{categoria}'")
+
+    def generar_reporte(self):
+        print("\n--- REPORTE DE INVENTARIO ---")
+        for cat, items in self.categorias.items():
+            print(f"\n🔧 {cat.upper()} ({len(items)} ítems):")
+            for item in items:
+                print(f"  - ID: {item['id']} | {item['nombre']} ({item['estado']})")
+
+# Uso
+mi_inventario = Inventario()
+mi_inventario.agregar_con_detalles()
+mi_inventario.agregar_con_detalles()
+mi_inventario.generar_reporte()
